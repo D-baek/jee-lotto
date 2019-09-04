@@ -1,8 +1,5 @@
 package com.lotto.web.serviceImpls;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
-
 import com.lotto.web.DAO.LottoDAO;
 import com.lotto.web.daoImpls.LottoDAOImpl;
 import com.lotto.web.domains.LottoBean;
@@ -27,35 +24,58 @@ public class LottoServiceImpl implements LottoService {
 		Random r = new Random();
 		String seq = "No.";
 		for(int i = 0; i<4; i++) {
-			seq += r.nextInt(10)+ "";
+			seq += r.nextInt(9)+ "";
 		}
-		System.out.println("생성된 시퀀스 값 : "+ seq);
 		return seq;
 	}
 	@Override
-	public String createBall() {
-			return new Random().nextInt(45)+1+"";
+	public int createBall() {
+		return (int)(Math.random() * 45)+1;
 	}
 	@Override
 	public String createLotterNum() {
-		String lotterNum = "";
-		Random r = new Random();
-		for(int i = 0; i<6; i++) {
-		lotterNum += r.nextInt(45)+1+ "";
+		String result = "";
+		int[] arr = new int[6];
+		for(int i = 0; i<arr.length; i++) {
+			int a = createBall();
+			if(!exist(arr, a)) {
+				arr[i] = a;
+			}else{
+				i--;
+			}
 		}
-			return lotterNum;
+		arr = bubbleSort(arr, true);
+		for(int i = 0; arr[i] <arr.length; i++) {
+			result += arr[i]+",";
 		}
-
+			return result;
+		}
 	@Override
-	public boolean duplicatePrevention(int[] arr) {
-		
-		return false;
+	public boolean exist(int[] arr, int a) {
+		boolean b = false;
+		for(int i : arr) {			
+			if(a==i) {
+				b = true;
+			}
+			
+		}
+		return b;
 	}
-
+	
 	@Override
-	public String ascendingSort(int[] arr) {
-		// TODO Auto-generated method stub
-		return null;
+	public int[] bubbleSort(int[] arr, boolean flag) {
+		int t = 0;
+		for(int k = 0; k< arr.length; k++) {
+			for(int i=0; i<arr.length-1; i++) {
+				if(flag) {
+					if(arr[i]>arr[i+1]) {
+						t = arr[i];
+						arr[i] = arr[i+1];
+						arr[i+1] = t;
+					}
+				}
+			}
+		}	
+		return arr;
 	}
 }
-

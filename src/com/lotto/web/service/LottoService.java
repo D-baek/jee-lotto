@@ -1,13 +1,11 @@
 package com.lotto.web.service;
-import java.util.List;
-
 import com.lotto.web.domains.LottoBean;
 
 public interface LottoService {
 	public void createLotto(LottoBean param);
 	public String createLottoSeq();
-	public String createBall();
+	public int createBall();
 	public String createLotterNum();
-	public boolean duplicatePrevention(int[] arr);
-	public String ascendingSort(int[] arr);
+	public boolean exist(int[] arr, int a);
+	public int[] bubbleSort(int[] arr, boolean flag);
 }
